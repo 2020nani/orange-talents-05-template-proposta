@@ -1,4 +1,4 @@
-package br.com.criarproposta.demo.beansvalidationcriadas;
+package br.com.criaproposta.demo.beansvalidationcriadas;
 
 import org.hibernate.validator.constraints.CompositionType;
 import org.hibernate.validator.constraints.ConstraintComposition;

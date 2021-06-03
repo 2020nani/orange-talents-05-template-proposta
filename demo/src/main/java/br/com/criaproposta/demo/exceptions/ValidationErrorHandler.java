@@ -1,4 +1,4 @@
-package br.com.criarproposta.demo.exceptions;
+package br.com.criaproposta.demo.exceptions;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
+
+import feign.FeignException;
+import feign.FeignException.UnprocessableEntity;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
@@ -90,6 +93,12 @@ public class ValidationErrorHandler {
     	return new FieldErrorOutputDto(exception.getMessage());
     }
     
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler( FeignException.class)
+    public FieldErrorOutputDto handleValidationError( FeignException exception) {
+    	
+    	return new FieldErrorOutputDto(exception.getMessage());
+    }
    
     
    

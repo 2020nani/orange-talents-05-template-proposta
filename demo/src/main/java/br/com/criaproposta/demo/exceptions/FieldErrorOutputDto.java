@@ -1,4 +1,4 @@
-package br.com.criarproposta.demo.exceptions;
+package br.com.criaproposta.demo.exceptions;
 
 public class FieldErrorOutputDto {
 

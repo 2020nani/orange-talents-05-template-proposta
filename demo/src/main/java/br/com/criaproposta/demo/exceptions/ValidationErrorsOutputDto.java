@@ -1,4 +1,4 @@
-package br.com.criarproposta.demo.exceptions;
+package br.com.criaproposta.demo.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
