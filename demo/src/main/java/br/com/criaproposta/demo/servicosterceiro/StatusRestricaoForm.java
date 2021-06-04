@@ -2,21 +2,21 @@ package br.com.criaproposta.demo.servicosterceiro;
 
 import br.com.criaproposta.demo.criaproposta.Proposta;
 
-public class StatusAvaliacaoForm {
+public class StatusRestricaoForm {
 
 	private String documento;
 	private String nome;
-	private ResultadoAvaliacao resultadoSolicitacao;
+	private ResultadoRestricao resultadoSolicitacao;
 	private Long idProposta;
 
-	public StatusAvaliacaoForm(Proposta proposta) {
+	public StatusRestricaoForm(Proposta proposta) {
 		this.documento = proposta.getDocumento();
 		this.nome = proposta.getNome();
 		this.idProposta = proposta.getId();
 	}
 	
 	@Deprecated
-	public StatusAvaliacaoForm() {
+	public StatusRestricaoForm() {
 		super();
 	}
 
@@ -30,7 +30,7 @@ public class StatusAvaliacaoForm {
 		return nome;
 	}
 
-	public ResultadoAvaliacao getResultadoSolicitacao() {
+	public ResultadoRestricao getResultadoSolicitacao() {
 		return resultadoSolicitacao;
 	}
 

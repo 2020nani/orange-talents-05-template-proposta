@@ -15,8 +15,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 import br.com.criaproposta.demo.beansvalidationcriadas.CpfOuCnpj;
-import br.com.criaproposta.demo.servicosterceiro.ResultadoAvaliacao;
-import br.com.criaproposta.demo.servicosterceiro.StatusAvaliacaoForm;
+import br.com.criaproposta.demo.servicosterceiro.ResultadoRestricao;
+import br.com.criaproposta.demo.servicosterceiro.StatusRestricaoForm;
 
 @Entity
 public class Proposta {
@@ -56,12 +56,6 @@ public class Proposta {
 		this.estadoProposta = estadoProposta;
 	}
 
-	
-
-	public void setEstadoProposta(EstadoProposta estadoProposta) {
-		this.estadoProposta = estadoProposta;
-	}
-
 
 	public Proposta(@NotBlank @CpfOuCnpj String documento, @NotBlank String nome, @NotBlank @Email String email,
 			@NotBlank String endereco, @Positive BigDecimal salario) {
@@ -96,8 +90,8 @@ public class Proposta {
 		return false;
 	}
 
-	public void atualizaRestricaoProposta(StatusAvaliacaoForm statusRestricao) {
-		if(statusRestricao.getResultadoSolicitacao().equals(ResultadoAvaliacao.SEM_RESTRICAO)) {
+	public void atualizaRestricaoProposta(ResultadoRestricao resultadoAvaliacao) {
+		if(resultadoAvaliacao.equals(ResultadoRestricao.SEM_RESTRICAO)) {
 			this.estadoProposta = EstadoProposta.ELEGIVEL;
 		}else {
 			this.estadoProposta = EstadoProposta.NAO_ELEGIVEL;

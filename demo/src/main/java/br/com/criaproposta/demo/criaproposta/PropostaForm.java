@@ -10,7 +10,7 @@ import javax.validation.constraints.Positive;
 
 import br.com.criaproposta.demo.beansvalidationcriadas.CpfOuCnpj;
 import br.com.criaproposta.demo.beansvalidationcriadas.UnicoValor;
-import br.com.criaproposta.demo.servicosterceiro.ResultadoAvaliacao;
+import br.com.criaproposta.demo.servicosterceiro.ResultadoRestricao;
 
 public class PropostaForm {
 

@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.criaproposta.demo.servicosterceiro.StatusAvaliacao;
-import br.com.criaproposta.demo.servicosterceiro.StatusAvaliacaoForm;
+import br.com.criaproposta.demo.servicosterceiro.ResultadoRestricao;
+import br.com.criaproposta.demo.servicosterceiro.StatusRestricao;
+import br.com.criaproposta.demo.servicosterceiro.StatusRestricaoForm;
 import feign.FeignException.UnprocessableEntity;
 
 import java.net.URI;
@@ -24,7 +25,7 @@ import java.net.URI;
 public class PropostaController {
 
 	@Autowired
-	private StatusAvaliacao statusAvaliacao;
+	private StatusRestricao statusAvaliacao;
 
 	@Autowired
 	private PropostaRepository propostarepository;
@@ -34,7 +35,7 @@ public class PropostaController {
 	@Transactional
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaForm propostaform, UriComponentsBuilder builder) {
 
-		Proposta proposta = propostaform.converte();
+    	Proposta proposta = propostaform.converte();
 
 		if (proposta.jaExisteProposta(propostarepository)) {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -43,13 +44,13 @@ public class PropostaController {
 
 		propostarepository.save(proposta);
 		try {
-		StatusAvaliacaoForm statusRestricao = statusAvaliacao.buscaStatusAvaliacao(new StatusAvaliacaoForm(proposta));
+		StatusRestricaoForm statusRestricao = statusAvaliacao.buscaStatusAvaliacao(new StatusRestricaoForm(proposta));
 		
-		proposta.atualizaRestricaoProposta(statusRestricao);
+		proposta.atualizaRestricaoProposta(statusRestricao.getResultadoSolicitacao());
 		
 		}catch(UnprocessableEntity e) {
 			
-        proposta.setEstadoProposta(EstadoProposta.NAO_ELEGIVEL);
+        proposta.atualizaRestricaoProposta(ResultadoRestricao.COM_RESTRICAO);
         
         }
 		URI uri = builder.path("proposta/{id}").buildAndExpand(proposta.getId()).toUri();

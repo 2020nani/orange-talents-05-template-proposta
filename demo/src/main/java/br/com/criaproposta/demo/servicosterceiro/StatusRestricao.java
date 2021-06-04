@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @FeignClient(url = "http://localhost:9999", name = "BuscaStatusAvaliacao")
-public interface StatusAvaliacao {
+public interface StatusRestricao {
 	
 	@RequestMapping(value="/api/solicitacao", method=RequestMethod.POST, consumes = "application/json")
-	StatusAvaliacaoForm buscaStatusAvaliacao(StatusAvaliacaoForm statusAvaliacaoForm);
+	StatusRestricaoForm buscaStatusAvaliacao(StatusRestricaoForm statusAvaliacaoForm);
 
 }
