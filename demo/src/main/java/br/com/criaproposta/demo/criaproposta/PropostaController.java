@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.criaproposta.demo.servicosterceiro.ResultadoRestricao;
-import br.com.criaproposta.demo.servicosterceiro.StatusRestricao;
-import br.com.criaproposta.demo.servicosterceiro.StatusRestricaoForm;
+import br.com.criaproposta.demo.servicosterceiro.acessarestricao.ResultadoRestricao;
+import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricao;
+import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricaoForm;
 import feign.FeignException.UnprocessableEntity;
 
 import java.net.URI;

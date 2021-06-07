@@ -1,4 +1,4 @@
-package br.com.criaproposta.demo.servicosterceiro;
+package br.com.criaproposta.demo.servicosterceiro.acessarestricao;
 
 import br.com.criaproposta.demo.criaproposta.Proposta;
 

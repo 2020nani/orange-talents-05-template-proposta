@@ -10,13 +10,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 import br.com.criaproposta.demo.beansvalidationcriadas.CpfOuCnpj;
-import br.com.criaproposta.demo.servicosterceiro.ResultadoRestricao;
-import br.com.criaproposta.demo.servicosterceiro.StatusRestricaoForm;
+import br.com.criaproposta.demo.servicosterceiro.acessarestricao.ResultadoRestricao;
+import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricaoForm;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.Cartao;
 
 @Entity
 public class Proposta {
@@ -44,6 +46,9 @@ public class Proposta {
 	
 	@Enumerated(EnumType.STRING)
     private EstadoProposta estadoProposta;
+	
+	@OneToOne(mappedBy = "proposta")
+    private Cartao cartao;
 	
 	@Deprecated
 	public Proposta() {

@@ -1,4 +1,4 @@
-package br.com.criaproposta.demo.servicosterceiro;
+package br.com.criaproposta.demo.servicosterceiro.acessarestricao;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
