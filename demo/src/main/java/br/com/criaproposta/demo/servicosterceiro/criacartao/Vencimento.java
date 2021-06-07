@@ -24,6 +24,20 @@ public class Vencimento {
 		this.dia = dia;
 		this.dataDeCriacao = dataDeCriacao;
 	}
+	
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public int getDia() {
+		return dia;
+	}
+
+	public LocalDateTime getDataDeCriacao() {
+		return dataDeCriacao;
+	}
 
 	@Override
 	public String toString() {

@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -84,8 +85,31 @@ public class Proposta {
 	public String getNome() {
 		return nome;
 	}
-	
-	
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+
+	public BigDecimal getSalario() {
+		return salario;
+	}
+
+
+	public EstadoProposta getEstadoProposta() {
+		return estadoProposta;
+	}
+
+
+	public Cartao getCartao() {
+		return cartao;
+	}
+
 
 	public boolean jaExisteProposta(PropostaRepository propostarepository) {
 		Optional<Proposta> proposta = propostarepository.findByDocumento(documento);

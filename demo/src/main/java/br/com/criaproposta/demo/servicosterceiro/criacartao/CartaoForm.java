@@ -5,19 +5,25 @@ import java.util.Collection;
 
 import javax.validation.groups.Default;
 
+import br.com.criaproposta.demo.beansvalidationcriadas.ExisteObjeto;
 import br.com.criaproposta.demo.criaproposta.Proposta;
 import br.com.criaproposta.demo.criaproposta.PropostaRepository;
 
 public class CartaoForm {
+    @ExisteObjeto(domainClass = Cartao.class, fieldName = "numeroCartao")
 	private String numeroCartao;
-	private LocalDateTime emitidoEm;
-	private String titular;
-	private int limite;
-	private RenegociacaoForm renegociacao;
-	private VencimentoForm vencimento;
-	private Long idProposta;
-
 	
+	private LocalDateTime emitidoEm;
+	
+	private String titular;
+	
+	private int limite;
+	
+	private RenegociacaoForm renegociacao;
+	
+	private VencimentoForm vencimento;
+	
+	private Long idProposta;
 
 	public CartaoForm(String id, LocalDateTime emitidoEm, String titular, int limite,
 			RenegociacaoForm renegociacao, VencimentoForm vencimento, Long idProposta) {

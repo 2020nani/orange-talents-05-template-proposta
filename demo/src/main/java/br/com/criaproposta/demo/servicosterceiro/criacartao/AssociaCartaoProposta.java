@@ -33,11 +33,11 @@ public class AssociaCartaoProposta {
 	    
 	    private Logger logger = LoggerFactory.getLogger(AssociaCartaoProposta.class);
 	
-	@Scheduled(fixedRate=5000)
+	@Scheduled(fixedRate=5000000)
     public void associar(){
         logger.info("O agendamento foi iniciado");
         List<Proposta> propostas = propostarepository.findByEstadoPropostaAndCartaoIsNull(EstadoProposta.ELEGIVEL);
-        if(propostas.size() <= 0) {
+        if(propostas.size() <= 0 ) {
             logger.info("Nao ha propostas para atualzar");
             return; 
         } 

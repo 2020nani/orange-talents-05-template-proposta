@@ -28,7 +28,7 @@ public class Cartao {
         private Renegociacao renegociacao;
         @OneToOne(cascade = CascadeType.MERGE)    
         private Vencimento vencimento;
-	    @OneToOne @JoinColumn(name = "proposta_id")
+        @OneToOne @JoinColumn(name = "proposta_id")
 	    private Proposta proposta;
 		
 	    @Deprecated
@@ -61,9 +61,36 @@ public class Cartao {
 		public String getNumeroCartao() {
 			return numeroCartao;
 		}
+
+		public LocalDateTime getEmitidoEm() {
+			return emitidoEm;
+		}
+
+		public String getTitular() {
+			return titular;
+		}
+
+		public int getLimite() {
+			return limite;
+		}
+
+		public Long getIdProposta() {
+			return idProposta;
+		}
+
+		public Renegociacao getRenegociacao() {
+			return renegociacao;
+		}
+
+		public Vencimento getVencimento() {
+			return vencimento;
+		}
+
 		public Proposta getProposta() {
 			return proposta;
 		}
+
+		
 		
 	   
 
