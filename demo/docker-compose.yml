@@ -18,6 +18,8 @@ services:
       POSTGRES_HOST: postgres
       ANALISE_FINANCEIRA_HOST: analise
       SISTEMA_CARTAO_HOST: contas
+      PERIODICIDADE_ASSOCIAR_CARTAO: 5000
+
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
