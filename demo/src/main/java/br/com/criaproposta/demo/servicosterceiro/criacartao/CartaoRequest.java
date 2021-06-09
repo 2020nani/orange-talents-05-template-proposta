@@ -8,7 +8,7 @@ import br.com.criaproposta.demo.criaproposta.Proposta;
 import br.com.criaproposta.demo.criaproposta.PropostaForm;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricaoForm;
 
-@FeignClient(url = "http://localhost:8888", name = "AssociaCartaoProposta")
+@FeignClient(url = "http://${proposta.services.sistemaCartao.host}:${proposta.services.sistemaCartao.port}", name = "AssociaCartaoProposta")
 public interface CartaoRequest {
 	
 	@RequestMapping(value="/api/cartoes", method=RequestMethod.POST, consumes = "application/json")

@@ -23,3 +23,4 @@ public class MeuHealthCheck implements HealthIndicator {
 	}
 
 }
+

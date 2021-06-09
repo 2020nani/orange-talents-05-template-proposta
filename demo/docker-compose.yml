@@ -1,5 +1,23 @@
 version: '3'
+
 services:
+  
+  proposta:
+     build: .
+     image: 'proposta'
+     ports:
+      - 8080:8080
+     depends_on:
+      - postgres
+      - vault
+      - grafana
+      - analise
+      - contas
+
+     environment:
+      POSTGRES_HOST: postgres
+      ANALISE_FINANCEIRA_HOST: analise
+      SISTEMA_CARTAO_HOST: contas
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"

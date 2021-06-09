@@ -15,53 +15,44 @@ import br.com.criaproposta.demo.criaproposta.Proposta;
 import br.com.criaproposta.demo.criaproposta.PropostaRepository;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricaoForm;
 
-
-
-
 @Component
 @EnableScheduling
 public class AssociaCartaoProposta {
-	    @Autowired
-	    private CartaoRequest cartaorequest;
-	    
-	    @Autowired
-	    private CartaoRepository cartaorepository; 
-	    
-	    @Autowired
-	    private PropostaRepository propostarepository;
-	    
-	    
-	    private Logger logger = LoggerFactory.getLogger(AssociaCartaoProposta.class);
-	
-	@Scheduled(fixedRate=5000000)
-    public void associar(){
-        logger.info("O agendamento foi iniciado");
-        List<Proposta> propostas = propostarepository.findByEstadoPropostaAndCartaoIsNull(EstadoProposta.ELEGIVEL);
-        if(propostas.size() <= 0 ) {
-            logger.info("Nao ha propostas para atualzar");
-            return; 
-        } 
+	@Autowired
+	private CartaoRequest cartaorequest;
 
-        propostas.forEach(proposta -> {
-            StatusRestricaoForm consultaRestricao = new StatusRestricaoForm(proposta);
-            CartaoForm cartaoform = cartaorequest.criaCartao(consultaRestricao);
-            
-            Cartao cartao = cartaoform.converte(propostarepository);
-    
-            cartaorepository.save(cartao);
-    
-            logger.info("Cartao numero: " + cartao.getNumeroCartao().substring(0,3)
-            		+ "****" + "****"  
-            		+ cartao.getNumeroCartao().substring(cartao.getNumeroCartao().length()-4, 19) 
-            		+", Proposta de Id: " + cartao.getProposta().getId() + " Cadastrado com Sucesso!!" );
-        });
+	@Autowired
+	private CartaoRepository cartaorepository;
 
+	@Autowired
+	private PropostaRepository propostarepository;
 
+	private Logger logger = LoggerFactory.getLogger(AssociaCartaoProposta.class);
 
+	@Scheduled(fixedDelayString = "${periodicidade.associar.cartao.proposta}")
+	public void associar() {
+		logger.info("O agendamento foi iniciado");
+		List<Proposta> propostas = propostarepository.findByEstadoPropostaAndCartaoIsNull(EstadoProposta.ELEGIVEL);
+		if (propostas.size() <= 0) {
+			logger.info("Nao ha propostas para atualzar");
+			return;
+		}
 
+		propostas.forEach(proposta -> {
+			StatusRestricaoForm consultaRestricao = new StatusRestricaoForm(proposta);
+			CartaoForm cartaoform = cartaorequest.criaCartao(consultaRestricao);
 
-        logger.info("Concluido o metodo");
+			Cartao cartao = cartaoform.converte(propostarepository);
 
-    }
+			cartaorepository.save(cartao);
+
+			logger.info("Cartao numero: " + cartao.getNumeroCartao().substring(0, 3) + "****" + "****"
+					+ cartao.getNumeroCartao().substring(cartao.getNumeroCartao().length() - 4, 19)
+					+ ", Proposta de Id: " + cartao.getProposta().getId() + " Cadastrado com Sucesso!!");
+		});
+
+		logger.info("Concluido o metodo");
+
+	}
 
 }
