@@ -40,7 +40,7 @@ public class AssociaCartaoProposta {
 
 		propostas.forEach(proposta -> {
 			StatusRestricaoForm consultaRestricao = new StatusRestricaoForm(proposta);
-			CartaoForm cartaoform = cartaorequest.criaCartao(consultaRestricao);
+			CartaoForm cartaoform = cartaorequest.criaCartao(proposta.getId());
 
 			Cartao cartao = cartaoform.converte(propostarepository);
 

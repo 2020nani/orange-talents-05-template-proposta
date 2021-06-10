@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -48,7 +49,7 @@ public class Proposta {
 	@Enumerated(EnumType.STRING)
     private EstadoProposta estadoProposta;
 	
-	@OneToOne(mappedBy = "proposta")
+	@OneToOne(mappedBy = "proposta",cascade = CascadeType.MERGE)
     private Cartao cartao;
 	
 	@Deprecated

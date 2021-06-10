@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.criaproposta.demo.cadastrabiometria.Biometria;
@@ -25,21 +26,21 @@ public class metodosget {
 	@Autowired
 	private BiometriaRepository biometriarepository;
 	
-	@GetMapping("/propostas")
-	public List<Proposta> listaPropostas(){
-		List<Proposta> propostas = propostarepository.findAll();
+	@GetMapping("/teste/{id}")
+	public Proposta listaPropostas(@PathVariable("id") Long id){
+		Proposta propostas = propostarepository.findById(id).get();
 		return propostas;
 		
 	}
-	@GetMapping("/cartoes")
-	public List<Cartao> listaCartoes(){
-		List<Cartao> cartoes = cartaorepository.findAll();
+	@GetMapping("/teste/cartoes/{id}")
+	public Cartao listaCartoes(@PathVariable("id") Long id){
+		Cartao cartoes = cartaorepository.findById("id").get();
 		return cartoes;
 		
 	}
-	@GetMapping("/biometrias")
-	public List<Biometria> listaBiometrias(){
-		List<Biometria> biometrias = biometriarepository.findAll();
+	@GetMapping("/teste/biometrias/{id}")
+	public Biometria listaBiometrias(@PathVariable("id") Long id){
+		Biometria biometrias = biometriarepository.findById(id).get();
 		return biometrias;
 		
 	}
