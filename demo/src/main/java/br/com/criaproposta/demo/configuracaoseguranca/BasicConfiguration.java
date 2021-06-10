@@ -24,7 +24,7 @@ public class BasicConfiguration  extends WebSecurityConfigurerAdapter {
     	  .authorizeRequests()
     	  .antMatchers(HttpMethod.POST, "/propostas/**").hasAuthority("SCOPE_profile")
     	  .antMatchers(HttpMethod.GET, "/detalheproposta/**").hasAuthority("SCOPE_profile")
-    	  .antMatchers(HttpMethod.POST, "/cartao/**").hasAuthority("SCOPE_profile")
+    	  .antMatchers(HttpMethod.POST, "/cartao/**").permitAll()//hasAuthority("SCOPE_profile")
     	  .antMatchers(HttpMethod.GET, "/teste/**").permitAll()
     	  .antMatchers(HttpMethod.GET, "/actuator/prometheus").permitAll()
       	  .and()

@@ -7,11 +7,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.groups.Default;
 
+import br.com.criaproposta.demo.bloqueiacartao.BloqueioCartao;
+import br.com.criaproposta.demo.bloqueiacartao.StatusCartao;
 import br.com.criaproposta.demo.criaproposta.Proposta;
 
 @Entity
@@ -23,6 +27,8 @@ public class Cartao {
 	private LocalDateTime emitidoEm;
 	private String titular;
 	private int limite;
+	@Enumerated(EnumType.STRING)
+	private StatusCartao statusCartao = StatusCartao.STATUS_ATIVO;
 	private Long idProposta;
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Renegociacao renegociacao;
@@ -31,6 +37,8 @@ public class Cartao {
 	@OneToOne
 	@JoinColumn(name = "proposta_id")
 	private Proposta proposta;
+	@OneToOne(mappedBy = "cartaoBloqueado",cascade = CascadeType.MERGE)
+	private BloqueioCartao bloqueioCartaoId;
 
 	@Deprecated
 	public Cartao() {
@@ -50,11 +58,14 @@ public class Cartao {
 		this.proposta = proposta;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "Cartao [numeroCartao=" + numeroCartao + ", emitidoEm=" + emitidoEm + ", titular=" + titular
-				+ ", limite=" + limite + ", idProposta=" + idProposta + ", vencimento=" + vencimento + ", proposta="
-				+ proposta + "]";
+				+ ", limite=" + limite + ", statusCartao=" + statusCartao + ", idProposta=" + idProposta
+				+ ", renegociacao=" + renegociacao + ", vencimento=" + vencimento + ", proposta=" + proposta
+				+ ", bloqueioCartaoId=" + bloqueioCartaoId + "]";
 	}
 
 	public String getNumeroCartao() {
@@ -87,6 +98,21 @@ public class Cartao {
 
 	public Proposta getProposta() {
 		return proposta;
+	}
+	
+	public StatusCartao getStatusCartao() {
+		return statusCartao;
+	}
+	public BloqueioCartao getBloqueioCartaoId() {
+		return bloqueioCartaoId;
+	}
+
+	public boolean bloqueiaCartao() {
+		if(statusCartao == StatusCartao.STATUS_ATIVO || statusCartao == null) {
+			this.statusCartao = StatusCartao.STATUS_BLOQUEADO;
+			return true;
+		}
+		return false;
 	}
 
 }
