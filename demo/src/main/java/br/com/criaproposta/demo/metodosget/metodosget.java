@@ -1,5 +1,7 @@
 package br.com.criaproposta.demo.metodosget;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,15 @@ import br.com.criaproposta.demo.criaproposta.Proposta;
 import br.com.criaproposta.demo.criaproposta.PropostaRepository;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.Cartao;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.CartaoRepository;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
+import io.micrometer.core.instrument.Timer;
 
 @RestController
 public class metodosget {
+	
+	@Autowired
+	private MeterRegistry meterRegistry;
 	
 	@Autowired
 	private CartaoRepository cartaorepository;
@@ -26,10 +34,29 @@ public class metodosget {
 	@Autowired
 	private BiometriaRepository biometriarepository;
 	
-	@GetMapping("/teste/{id}")
-	public Proposta listaPropostas(@PathVariable("id") Long id){
-		Proposta propostas = propostarepository.findById(id).get();
-		return propostas;
+	public void criarGauge(List<PropostaDtoTeste> proposta) {
+
+        this.meterRegistry.gauge("meu_gauge", proposta.size());
+    }
+	
+	 @Autowired
+	 public void metricasTimer() {
+	        Collection<Tag> tags = new ArrayList<>();
+	        
+	        Timer timerConsultarProposta = this.meterRegistry.timer("consultar_proposta", tags);
+	        timerConsultarProposta.record(() -> {
+	            listaPropostas();
+	            
+	        });
+	        
+	    }
+	
+	@GetMapping("/teste")
+	public List<PropostaDtoTeste> listaPropostas(){
+		List<Proposta> propostas = propostarepository.findAll();
+		List<PropostaDtoTeste> propostaslistadas = PropostaDtoTeste.converte(propostas);
+		criarGauge(propostaslistadas);
+		return propostaslistadas;
 		
 	}
 	@GetMapping("/teste/cartoes/{id}")

@@ -1,38 +1,51 @@
 package br.com.criaproposta.demo.criaproposta;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.criaproposta.demo.exceptions.FieldErrorOutputDto;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.ResultadoRestricao;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricao;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricaoForm;
-import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusBloqueio;
-import feign.FeignException.UnprocessableEntity;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
+import io.micrometer.core.instrument.Timer;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @RestController
 public class PropostaController {
 
 	@Autowired
+	private MeterRegistry meterRegistry;
+	
+	@Autowired
 	private StatusRestricao statusAvaliacao;
 
 	@Autowired
 	private PropostaRepository propostarepository;
-
-
+	
+	private Counter contadorPropostasSalvas;
+	
+	@PostConstruct
+    public void metricasCounter() {
+        Collection<Tag> tags = new ArrayList<>();
+        this.contadorPropostasSalvas = this.meterRegistry.counter("proposta_criada_com_sucesso", tags);
+    }
+	
+	
 	@PostMapping("/propostas")
 	@Transactional
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaForm propostaform, UriComponentsBuilder builder) {
@@ -57,6 +70,9 @@ public class PropostaController {
 		
 		proposta.atualizaRestricaoProposta(statusRestricao.getResultadoSolicitacao());
 		
+		if (proposta.getId() != null) {
+            contadorPropostasSalvas.increment();
+        }
 		
 		URI uri = builder.path("proposta/{id}").buildAndExpand(proposta.getId()).toUri();
 
