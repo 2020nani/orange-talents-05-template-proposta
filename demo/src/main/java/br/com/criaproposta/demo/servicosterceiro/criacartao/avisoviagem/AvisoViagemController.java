@@ -19,6 +19,8 @@ import br.com.criaproposta.demo.exceptions.FieldErrorOutputDto;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.Cartao;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.CartaoRepository;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.BloqueioCartaoController;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.NotificaBloqueioForm;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusBloqueio;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusCartao;
 
 @RestController
@@ -28,6 +30,9 @@ public class AvisoViagemController {
 
 	@Autowired
 	private CartaoRepository cartaorepository;
+	
+	@Autowired
+	private SistemaNotificaAvisoViagem sistemanotificacao;
 
 	@PostMapping("cartoes/{idCartao}/aviso")
 	public ResponseEntity<?> cadastraAvisoViagem(@PathVariable("idCartao") String idCartao, HttpServletRequest request,
@@ -55,6 +60,14 @@ public class AvisoViagemController {
 					.body(new FieldErrorOutputDto(idCartao, "Este cartao esta bloqueado, entre em contato com a operadora do cartao "));
 			
 		}
+		
+        NotificaViagemForm notificaViagem = sistemanotificacao.notificaViagemForm(new NotificaViagemForm(avisoviagemform.getDestino(), avisoviagemform.getValidoAte(), null), idCartao);
+		
+		if (notificaViagem.getResultado().equals(StatusAVisoViagem.FALHA)) {
+
+	           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new FieldErrorOutputDto("cartao", "Falhou ao agendar aviso de viagem"));
+
+	        }
 		
 
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");

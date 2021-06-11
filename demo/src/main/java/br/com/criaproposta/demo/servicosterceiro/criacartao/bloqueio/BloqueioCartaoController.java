@@ -67,15 +67,15 @@ public class BloqueioCartaoController {
 		}
 		String userAgent = request.getHeader("User-Agent");
 		
-		NotificaBloqueioForm statusBloqueioCartao = sistemabloqueio.notificaBloqueioDoCartao(new NotificaBloqueioForm(null, userAgent),idCartao);
+		NotificaBloqueioForm statusAvisoViagem = sistemabloqueio.notificaBloqueioDoCartao(new NotificaBloqueioForm(null, userAgent),idCartao);
 		
-		if (statusBloqueioCartao.getResultado().equals(StatusBloqueio.FALHA)) {
+		if (statusAvisoViagem.getResultado().equals(StatusBloqueio.FALHA)) {
 
 	           return ResponseEntity.unprocessableEntity().body(new FieldErrorOutputDto("cartao", "Cartão falhou ao ser bloqueado"));
 
 	        }
 		
-		cartao.get().bloqueiaCartao(userAgent, ipAddress, false);
+		cartao.get().bloqueiaCartao(userAgent, ipAddress, true);
 	
 		cartaorepository.save(cartao.get());
 		

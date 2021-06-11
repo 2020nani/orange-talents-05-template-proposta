@@ -35,6 +35,14 @@ public class AvisoViagemForm {
 			return new AvisoViagem(destino, ipAddress, userAgent, validoAte,cartao);
 		}
 
+		public String getDestino() {
+			return destino;
+		}
+
+		public LocalDate getValidoAte() {
+			return validoAte;
+		}
+
 		
 	    
 	    
