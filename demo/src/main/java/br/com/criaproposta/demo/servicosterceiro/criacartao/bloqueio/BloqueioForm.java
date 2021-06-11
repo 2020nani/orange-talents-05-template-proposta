@@ -1,4 +1,4 @@
-package br.com.criaproposta.demo.servicosterceiro.criacartao;
+package br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +17,4 @@ public class BloqueioForm {
 		this.ativo = ativo;
 	}
 	
-	
-
 }
- 

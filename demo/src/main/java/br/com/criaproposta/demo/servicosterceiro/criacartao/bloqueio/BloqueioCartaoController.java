@@ -1,6 +1,9 @@
-package br.com.criaproposta.demo.bloqueiacartao;
+package br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio;
+
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.criaproposta.demo.cadastrabiometria.BiometriaController;
+import br.com.criaproposta.demo.exceptions.FieldErrorOutputDto;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.Cartao;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.CartaoRepository;
 
@@ -22,12 +25,13 @@ public class BloqueioCartaoController {
 	private final Logger logger = LoggerFactory.getLogger(BloqueioCartaoController.class);
 	
 	@Autowired
-	private CartaoRepository cartaorepository;
+	private SistemaNotificaBloqueioCartao sistemabloqueio;
 	
 	@Autowired
-	private BloqueiaCartaoRepository bloqueiacartaorepository;
+	private CartaoRepository cartaorepository;
 
-	@PostMapping("cartao/{idCartao}/bloqueia")
+	@PostMapping("cartoes/{idCartao}/bloqueios")
+	@Transactional
 	public ResponseEntity<?> bloqueiaCartao(@PathVariable("idCartao") String idCartao, 
 			                                HttpServletRequest request) throws BindException  {
 
@@ -38,8 +42,10 @@ public class BloqueioCartaoController {
 					.body("Numero do Cartao precisa ter 19 digitos no formato 0000-0000-0000-0000 ");
 
 		}
+		
+		Optional<Cartao> cartao = cartaorepository.findById(idCartao);
 
-		if (!cartaorepository.existsById(idCartao)) {
+		if (cartao.isEmpty()) {
 			
 			logger.info("Nao existe objeto");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -47,27 +53,34 @@ public class BloqueioCartaoController {
 
 		}
 		
-		Cartao cartao = cartaorepository.findById(idCartao).get();
+		if(cartao.get().getStatusCartao().equals(StatusCartao.STATUS_BLOQUEADO)) {
+			BindException problemaBloqueioCartao = new BindException(cartao, "cartao");
+			problemaBloqueioCartao.reject(null,"Cartao ja esta bloqueado");
+
+			throw problemaBloqueioCartao;
+		}
+		
 		
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");
 		if (ipAddress == null) {
 			ipAddress = request.getRemoteAddr();
 		}
 		String userAgent = request.getHeader("User-Agent");
-		boolean bloqueio = cartao.bloqueiaCartao();
-		if(!bloqueio) {
-			BindException problemaBloqueioCartao = new BindException(bloqueio, "bloqueio");
-			problemaBloqueioCartao.reject(null,"Cartao ja esta bloqueado");
-
-			throw problemaBloqueioCartao;
-		}
-		BloqueioCartao bloqueioCartao = new BloqueioCartao(userAgent, ipAddress, cartao);
 		
-		bloqueiacartaorepository.save(bloqueioCartao);
+		NotificaBloqueioForm statusBloqueioCartao = sistemabloqueio.notificaBloqueioDoCartao(new NotificaBloqueioForm(null, userAgent),idCartao);
+		
+		if (statusBloqueioCartao.getResultado().equals(StatusBloqueio.FALHA)) {
+
+	           return ResponseEntity.unprocessableEntity().body(new FieldErrorOutputDto("cartao", "Cartão falhou ao ser bloqueado"));
+
+	        }
+		
+		cartao.get().bloqueiaCartao(userAgent, ipAddress, false);
+	
+		cartaorepository.save(cartao.get());
 		
 		logger.info("metodo finalizado com sucesso cartao numero " +idCartao.substring(0,4)+ "-****-****-" +idCartao.substring(15)+ " bloqueado" );
 		return ResponseEntity.ok().build();
 	}
 
 }
-

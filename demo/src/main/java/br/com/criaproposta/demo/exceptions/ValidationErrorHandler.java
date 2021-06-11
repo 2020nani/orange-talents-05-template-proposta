@@ -93,16 +93,6 @@ public class ValidationErrorHandler {
     	return new FieldErrorOutputDto(exception.getMessage());
     }
     
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler( FeignException.class)
-    public FieldErrorOutputDto handleValidationError( FeignException exception) {
-    	
-    	return new FieldErrorOutputDto(exception.getMessage());
-    }
-   
-    
-   
-
 	private ValidationErrorsOutputDto buildValidationErrors(List<ObjectError> globalErrors,
 			List<FieldError> fieldErrors) {
 		ValidationErrorsOutputDto validationErrors = new ValidationErrorsOutputDto();

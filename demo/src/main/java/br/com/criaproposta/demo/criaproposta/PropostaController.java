@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.criaproposta.demo.exceptions.FieldErrorOutputDto;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.ResultadoRestricao;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricao;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricaoForm;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusBloqueio;
 import feign.FeignException.UnprocessableEntity;
 
 import java.net.URI;
@@ -43,16 +45,19 @@ public class PropostaController {
 		}
 
 		propostarepository.save(proposta);
-		try {
+		
 		StatusRestricaoForm statusRestricao = statusAvaliacao.buscaStatusAvaliacao(new StatusRestricaoForm(proposta));
+		
+		if (statusRestricao.getResultadoSolicitacao().equals(ResultadoRestricao.COM_RESTRICAO)) {
+
+	           return ResponseEntity.unprocessableEntity()
+	        		   .body(new FieldErrorOutputDto("documento","Documento possui restricao no sistema"));
+
+	        }
 		
 		proposta.atualizaRestricaoProposta(statusRestricao.getResultadoSolicitacao());
 		
-		}catch(UnprocessableEntity e) {
-			
-        proposta.atualizaRestricaoProposta(ResultadoRestricao.COM_RESTRICAO);
-        
-        }
+		
 		URI uri = builder.path("proposta/{id}").buildAndExpand(proposta.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();

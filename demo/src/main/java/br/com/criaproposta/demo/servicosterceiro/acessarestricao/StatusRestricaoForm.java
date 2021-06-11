@@ -15,6 +15,14 @@ public class StatusRestricaoForm {
 		this.idProposta = proposta.getId();
 	}
 	
+	
+	public StatusRestricaoForm(ResultadoRestricao resultadoSolicitacao, Long idProposta) {
+		super();
+		this.resultadoSolicitacao = resultadoSolicitacao;
+		this.idProposta = idProposta;
+	}
+
+
 	@Deprecated
 	public StatusRestricaoForm() {
 		super();

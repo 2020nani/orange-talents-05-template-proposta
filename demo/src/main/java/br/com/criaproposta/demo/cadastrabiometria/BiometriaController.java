@@ -55,7 +55,7 @@ public class BiometriaController {
         logger.debug("Log de depuração, contém informações mais refinadas, que são mais úteis para depurar um aplicativo");
         logger.trace("Log de rastreabilidade, contém informações mais refinadas do que o DEBUG");
 
-		return ResponseEntity.created(uri).body(biometria.toString());
+		return ResponseEntity.created(uri).build();
 		
 		
 	}
