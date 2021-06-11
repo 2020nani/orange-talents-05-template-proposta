@@ -18,8 +18,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.groups.Default;
 
+import org.springframework.util.Assert;
 
 import br.com.criaproposta.demo.criaproposta.Proposta;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.avisoviagem.AvisoViagem;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.Bloqueio;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusCartao;
 
@@ -44,6 +46,8 @@ public class Cartao {
 	private Proposta proposta;
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cartaoBloqueado",cascade = CascadeType.MERGE)
 	private List<Bloqueio> bloqueioCartao;
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cartaoReferenteAoAviso",cascade = CascadeType.MERGE)
+	private List<AvisoViagem> avisoViagemCartao;
 
 	@Deprecated
 	public Cartao() {
@@ -123,6 +127,15 @@ public class Cartao {
 		Bloqueio bloqueiaCartao = new Bloqueio(userAgent, ipAddress, ativo, this);
 		this.statusCartao = StatusCartao.STATUS_BLOQUEADO;
 		bloqueioCartao.add(bloqueiaCartao);
+		
+	}
+
+
+
+	public void criaAvisoViagem(AvisoViagem aviso) {
+	   Assert.state(aviso!=null,"Nao ha nenhum objeto de aviso de viagem para ser salvo");
+	   
+	   avisoViagemCartao.add(aviso);
 		
 	}
 
