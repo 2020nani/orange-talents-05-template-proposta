@@ -3,6 +3,7 @@ package br.com.criaproposta.demo.servicosterceiro.criacartao.avisoviagem;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +42,7 @@ public class AvisoViagem {
     
     @NotNull
     @Valid
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cartao cartaoReferenteAoAviso;
 	    
     @CreationTimestamp

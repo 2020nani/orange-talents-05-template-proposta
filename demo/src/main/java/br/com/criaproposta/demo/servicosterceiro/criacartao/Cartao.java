@@ -1,6 +1,7 @@
 package br.com.criaproposta.demo.servicosterceiro.criacartao;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import br.com.criaproposta.demo.criaproposta.Proposta;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.avisoviagem.AvisoViagem;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.Bloqueio;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusCartao;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira.AssociaCarteira;
 
 @Entity
 public class Cartao {
@@ -44,21 +46,21 @@ public class Cartao {
 	@OneToOne
 	@JoinColumn(name = "proposta_id")
 	private Proposta proposta;
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cartaoBloqueado",cascade = CascadeType.MERGE)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cartaoBloqueado", cascade = CascadeType.MERGE)
 	private List<Bloqueio> bloqueioCartao;
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cartaoReferenteAoAviso",cascade = CascadeType.MERGE)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cartaoReferenteAoAviso", cascade = CascadeType.MERGE)
 	private List<AvisoViagem> avisoViagemCartao;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cartaoAssociado", cascade = CascadeType.MERGE)
+	private List<AssociaCarteira> carteiraassociada;
 
 	@Deprecated
 	public Cartao() {
 
 	}
 
-	
-	
 	public Cartao(String numeroCartao, LocalDateTime emitidoEm, String titular, int limite, StatusCartao statusCartao,
-			Long idProposta, Renegociacao renegociacao, Vencimento vencimento, Proposta proposta, List<Bloqueio> bloqueioCartao
-			) {
+			Long idProposta, Renegociacao renegociacao, Vencimento vencimento, Proposta proposta,
+			List<Bloqueio> bloqueioCartao) {
 		super();
 		this.numeroCartao = numeroCartao;
 		this.emitidoEm = emitidoEm;
@@ -71,8 +73,6 @@ public class Cartao {
 		this.proposta = proposta;
 		this.bloqueioCartao = bloqueioCartao;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -113,32 +113,50 @@ public class Cartao {
 	public Proposta getProposta() {
 		return proposta;
 	}
-	
+
 	public StatusCartao getStatusCartao() {
 		return statusCartao;
 	}
+
 	public List<Bloqueio> getBloqueioCartao() {
 		return bloqueioCartao;
 	}
 
+	public List<AvisoViagem> getAvisoViagemCartao() {
+		return avisoViagemCartao;
+	}
 
+	public List<AssociaCarteira> getCarteiraassociada() {
+		return carteiraassociada;
+	}
 
 	public void bloqueiaCartao(String userAgent, String ipAddress, boolean ativo) {
 		Bloqueio bloqueiaCartao = new Bloqueio(userAgent, ipAddress, ativo, this);
 		this.statusCartao = StatusCartao.STATUS_BLOQUEADO;
 		bloqueioCartao.add(bloqueiaCartao);
-		
+
 	}
-
-
 
 	public void criaAvisoViagem(AvisoViagem aviso) {
-	   Assert.state(aviso!=null,"Nao ha nenhum objeto de aviso de viagem para ser salvo");
-	   
-	   avisoViagemCartao.add(aviso);
-		
+		Assert.state(aviso != null, "Nao ha nenhum objeto de aviso de viagem para ser salvo");
+
+		avisoViagemCartao.add(aviso);
+
 	}
 
+	public boolean associacarteira(AssociaCarteira carteira) {
+		List <Integer> count = new ArrayList<Integer>();
+		this.carteiraassociada.forEach(carteirarequest -> {
+			if (carteirarequest.getCarteira() == carteira.getCarteira()) {
+				count.add(1);
+			}
+		});
+		if(count.size() > 0) {
+			return true;
+		}
+		carteiraassociada.add(carteira);
+        return false;
+	}
 
 	
 
