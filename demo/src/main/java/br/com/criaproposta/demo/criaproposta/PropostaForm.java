@@ -8,6 +8,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.keygen.KeyGenerators;
+
 import br.com.criaproposta.demo.beansvalidationcriadas.CpfOuCnpj;
 import br.com.criaproposta.demo.beansvalidationcriadas.UnicoValor;
 import br.com.criaproposta.demo.servicosterceiro.acessarestricao.ResultadoRestricao;
@@ -54,7 +57,10 @@ public class PropostaForm {
 
 	public Proposta converte() {
 		
-		return new Proposta(documento, nome, email, endereco, salario);
+		String salt = KeyGenerators.string().generateKey();
+		String documentoCodificado = Encryptors.text("password", "5c0744940b5c369b").encrypt(this.documento);
+		
+		return new Proposta(documentoCodificado, nome, email, endereco, salario);
 	}
 
 	public String getEmail() {

@@ -56,7 +56,7 @@ public class PropostaController {
 		}
 
 		propostarepository.save(proposta);
-
+       
 		StatusRestricaoForm statusRestricao = statusAvaliacao.buscaStatusAvaliacao(new StatusRestricaoForm(proposta));
 
 		if (statusRestricao.getResultadoSolicitacao().equals(ResultadoRestricao.COM_RESTRICAO)) {

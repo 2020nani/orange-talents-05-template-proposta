@@ -30,7 +30,6 @@ public class Proposta {
 	private Long id;
 
 	@NotBlank
-	@CpfOuCnpj
 	private String documento;
 
 	@NotBlank
