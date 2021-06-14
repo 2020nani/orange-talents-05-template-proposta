@@ -22,7 +22,7 @@ public class BasicConfiguration  extends WebSecurityConfigurerAdapter {
     	http.cors();
     	http.csrf().disable()
     	  .authorizeRequests()
-    	  .antMatchers(HttpMethod.POST, "/propostas/**").hasAuthority("SCOPE_profile")
+    	  .antMatchers(HttpMethod.POST, "/propostas/**").permitAll() //.hasAuthority("SCOPE_profile")
     	  .antMatchers(HttpMethod.GET, "/detalheproposta/**").hasAuthority("SCOPE_profile")
     	  .antMatchers(HttpMethod.POST, "/cartao/**").permitAll()//hasAuthority("SCOPE_profile")
     	  .antMatchers(HttpMethod.GET, "/teste/**").permitAll()

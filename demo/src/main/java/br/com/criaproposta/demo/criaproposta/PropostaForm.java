@@ -57,6 +57,9 @@ public class PropostaForm {
 		return new Proposta(documento, nome, email, endereco, salario);
 	}
 
+	public String getEmail() {
+		return email;
+	}
 
 	
 }
