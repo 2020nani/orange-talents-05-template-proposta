@@ -26,7 +26,7 @@ public class BasicConfiguration  extends WebSecurityConfigurerAdapter {
     	  .antMatchers(HttpMethod.GET, "/detalheproposta/**").hasAuthority("SCOPE_profile")
     	  .antMatchers(HttpMethod.POST, "/cartao/**").permitAll()//hasAuthority("SCOPE_profile")
     	  .antMatchers(HttpMethod.GET, "/teste/**").permitAll()
-    	  .antMatchers(HttpMethod.GET, "/actuator/prometheus").permitAll()
+    	  .antMatchers(HttpMethod.GET, "/actuator/prometheus/**").permitAll()
       	  .and()
        	  .sessionManagement()
       	  .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

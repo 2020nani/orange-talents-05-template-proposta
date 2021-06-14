@@ -19,8 +19,6 @@ import br.com.criaproposta.demo.servicosterceiro.acessarestricao.StatusRestricao
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
-import io.opentracing.Span;
-import io.opentracing.Tracer;
 
 import java.net.URI;
 import java.util.ArrayList;
