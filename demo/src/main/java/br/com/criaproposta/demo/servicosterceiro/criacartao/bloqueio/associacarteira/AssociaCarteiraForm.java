@@ -15,11 +15,15 @@ public class AssociaCarteiraForm {
 	
 	@NotNull
 	private Carteira carteira;
+	
+	private StatusSistemaAssociaCarteira resultado;
 
-	public AssociaCarteiraForm(@Email String email, @NotBlank Carteira carteira) {
+	public AssociaCarteiraForm(@Email @NotBlank String email, @NotNull Carteira carteira,
+			StatusSistemaAssociaCarteira resultado) {
 		super();
 		this.email = email;
 		this.carteira = carteira;
+		this.resultado = resultado;
 	}
 
 	public AssociaCarteira converte(Cartao cartao) {
@@ -31,4 +35,13 @@ public class AssociaCarteiraForm {
 		return carteira;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public StatusSistemaAssociaCarteira getResultado() {
+		return resultado;
+	}
+
+	
 }

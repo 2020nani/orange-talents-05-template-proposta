@@ -19,10 +19,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.criaproposta.demo.exceptions.FieldErrorOutputDto;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.Cartao;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.CartaoRepository;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusBloqueio;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusCartao;
 
 @RestController
 public class AssociaCarteiraController {
+	
+	@Autowired
+	private SistemaAssociaCarteira sistemaassociacarteira;
 	
 	@Autowired
 	private CartaoRepository cartaorepository;
@@ -54,9 +58,14 @@ public class AssociaCarteiraController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(new FieldErrorOutputDto(idCartao, "Este cartao esta bloqueado, entre em contato com a operadora do cartao "));
 		}
+		AssociaCarteira carteira = associacarteiraform.getCarteira().carteiradigital(cartao.get(),associacarteiraform, sistemaassociacarteira);
 		
+		if (carteira == null) {
+
+	           return ResponseEntity.unprocessableEntity().body(new FieldErrorOutputDto("cartao", "Falha ao tentar associar cartao"));
+
+	        }
 		
-		AssociaCarteira carteira = associacarteiraform.converte(cartao.get());
 		
 		boolean verificaSeCarteiraJaEstaAssocida = cartao.get().associacarteira(carteira);
 		

@@ -56,6 +56,11 @@ public class AssociaCarteira {
 	public Long getId() {
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return "AssociaCarteira [id=" + id + ", email=" + email + ", carteira=" + carteira + "]";
+	}
 	
 
 }
