@@ -22,10 +22,10 @@ import javax.validation.groups.Default;
 import org.springframework.util.Assert;
 
 import br.com.criaproposta.demo.criaproposta.Proposta;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira.AssociaCarteira;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.avisoviagem.AvisoViagem;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.Bloqueio;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusCartao;
-import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira.AssociaCarteira;
 
 @Entity
 public class Cartao {

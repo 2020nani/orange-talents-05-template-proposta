@@ -3,8 +3,8 @@ package br.com.criaproposta.demo.metodosget;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira.AssociaCarteira;
-import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira.Carteira;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira.AssociaCarteira;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira.Carteira;
 
 public class AssociaCarteiraDto {
 

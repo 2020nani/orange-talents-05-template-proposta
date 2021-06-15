@@ -3,7 +3,7 @@ package br.com.criaproposta.demo.servicosterceiro.criacartao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira.Carteira;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira.Carteira;
 
 @Repository
 public interface CartaoRepository extends JpaRepository<Cartao, String> {

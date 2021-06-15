@@ -1,4 +1,4 @@
-package br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira;
+package br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira;
 
 import java.net.URI;
 import java.util.Optional;

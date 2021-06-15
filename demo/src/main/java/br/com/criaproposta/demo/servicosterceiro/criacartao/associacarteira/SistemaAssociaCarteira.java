@@ -1,4 +1,4 @@
-package br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira;
+package br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;

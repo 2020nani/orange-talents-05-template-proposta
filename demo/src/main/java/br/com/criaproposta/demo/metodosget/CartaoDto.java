@@ -25,11 +25,11 @@ import br.com.criaproposta.demo.criaproposta.Proposta;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.Cartao;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.Renegociacao;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.Vencimento;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira.AssociaCarteira;
+import br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira.Carteira;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.avisoviagem.AvisoViagem;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.Bloqueio;
 import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.StatusCartao;
-import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira.AssociaCarteira;
-import br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira.Carteira;
 
 public class CartaoDto {
 

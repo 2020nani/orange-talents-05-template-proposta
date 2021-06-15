@@ -1,4 +1,4 @@
-package br.com.criaproposta.demo.servicosterceiro.criacartao.bloqueio.associacarteira;
+package br.com.criaproposta.demo.servicosterceiro.criacartao.associacarteira;
 
 import javax.validation.Valid;
 
