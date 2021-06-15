@@ -54,6 +54,34 @@ public class Bloqueio {
 		this.ativo = ativo;
 		this.cartaoBloqueado = cartaoBloqueado;
 	}
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getUserAgent() {
+		return userAgent;
+	}
+
+	public String getIpCliente() {
+		return ipCliente;
+	}
+
+	
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public Cartao getCartaoBloqueado() {
+		return cartaoBloqueado;
+	}
+
+	public LocalDateTime getInstanteBloqueio() {
+		return instanteBloqueio;
+	}
 
 	@Override
 	public String toString() {

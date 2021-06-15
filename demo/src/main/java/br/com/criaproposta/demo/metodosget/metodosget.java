@@ -59,10 +59,11 @@ public class metodosget {
 		return propostaslistadas;
 		
 	}
-	@GetMapping("/teste/cartoes/{id}")
-	public Cartao listaCartoes(@PathVariable("id") Long id){
-		Cartao cartoes = cartaorepository.findById("id").get();
-		return cartoes;
+	@GetMapping("/teste/cartoes")
+	public List<CartaoDto> listaCartoes(){
+		List<Cartao> cartoes = cartaorepository.findAll();
+		List<CartaoDto> listaCartoes = CartaoDto.converte(cartoes);
+		return listaCartoes;
 		
 	}
 	@GetMapping("/teste/biometrias/{id}")

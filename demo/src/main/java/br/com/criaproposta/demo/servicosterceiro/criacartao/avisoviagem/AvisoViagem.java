@@ -64,6 +64,34 @@ public class AvisoViagem {
 	}
 
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getDestino() {
+		return destino;
+	}
+
+	public String getIpCliente() {
+		return ipCliente;
+	}
+
+	public String getUserAgent() {
+		return userAgent;
+	}
+
+	public LocalDate getValidoAte() {
+		return validoAte;
+	}
+
+	public Cartao getCartaoReferenteAoAviso() {
+		return cartaoReferenteAoAviso;
+	}
+
+	public LocalDate getHoradatarequisicao() {
+		return horadatarequisicao;
+	}
+
 	@Override
 	public String toString() {
 		return "AvisoViagem [id=" + id + ", destino=" + destino + ", ipCliente=" + ipCliente + ", userAgent="

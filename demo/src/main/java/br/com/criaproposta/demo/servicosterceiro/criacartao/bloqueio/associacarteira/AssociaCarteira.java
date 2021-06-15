@@ -57,6 +57,15 @@ public class AssociaCarteira {
 		return id;
 	}
 
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public Cartao getCartaoAssociado() {
+		return cartaoAssociado;
+	}
+
 	@Override
 	public String toString() {
 		return "AssociaCarteira [id=" + id + ", email=" + email + ", carteira=" + carteira + "]";
